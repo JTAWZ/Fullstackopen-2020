@@ -1,3 +1,7 @@
+This project is a scratch pad for Fullstackopen part 1C Component state event handlers
+#Component Helper Function
+#Destructuring
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
