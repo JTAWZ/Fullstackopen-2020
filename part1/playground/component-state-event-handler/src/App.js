@@ -1,12 +1,23 @@
-const Hello = (props) => {
-  const bornYear = () => {
-    const currentYear = new Date().getFullYear();
-    return currentYear - props.age;
-  };
+//The props that are passed to the component are now directly destructured into the variables name and age (part 2).
+const Hello = ({ name, age }) => {
+  // Assign variable to props
+  // const name = props.name;
+  // const age = props.age;
+
+  //const { age, name } = props; //destructing of variable part 1 ( basic)
+
+  // if the objects we are destructing have values
+  // props = {
+  //   name: "Jason",
+  //   age: 30,
+  // };
+
+  const bornYear = () => new Date().getFullYear() - age;
+
   return (
     <div>
       <p>
-        Hello {props.name}, you are {props.age} years old
+        Hello {name}, you are {age} years old
       </p>
       <p>So you are probably born in {bornYear()}</p>
     </div>
