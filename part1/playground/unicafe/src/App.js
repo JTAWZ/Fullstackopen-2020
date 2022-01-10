@@ -1,32 +1,34 @@
 import React, { useState } from "react";
 
+const StatisticLine = (props) => {
+  return (
+    <>
+      <p>
+        {props.text}:{props.value}
+      </p>
+    </>
+  );
+};
+
 const Statistics = ({ statistics }) => {
   const calAvg = () => {
-    return (statistics[0] - statistics[2]) / statistics[3];
+    const avgResult = (statistics[0] - statistics[2]) / statistics[3];
+    return avgResult.toFixed(1);
   };
 
   const calPositive = () => {
     const result = (statistics[0] * 100) / statistics[3];
     if (isNaN(result)) return 0;
-    return result;
+    return result.toFixed(2) + "%";
   };
   return (
     <>
-      <p>
-        good:
-        {statistics[0]}
-      </p>
-      <p>
-        neutral:
-        {statistics[1]}
-      </p>
-      <p>
-        bad:
-        {statistics[2]}
-      </p>
-      <p>all:{statistics[3]}</p>
-      <p>average:{calAvg()}</p>
-      <p>positive:{calPositive()}%</p>
+      <StatisticLine text="good" value={statistics[0]} />
+      <StatisticLine text="neutral" value={statistics[1]} />
+      <StatisticLine text="bad" value={statistics[2]} />
+      <StatisticLine text="all" value={statistics[3]} />
+      <StatisticLine text="average" value={calAvg()} />
+      <StatisticLine text="positive" value={calPositive()} />
     </>
   );
 };
