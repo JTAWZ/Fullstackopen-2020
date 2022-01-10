@@ -12,7 +12,6 @@ const Statistics = ({ statistics }) => {
   };
   return (
     <>
-      <h1>statistics</h1>
       <p>
         good:
         {statistics[0]}
@@ -74,8 +73,9 @@ const App = () => {
         }}
         text="bad"
       />
+      <h1>statistics</h1>
       {total === 0 ? (
-        "There's no feedback"
+        "no feedback given"
       ) : (
         <Statistics statistics={[good, neutral, bad, total]} />
       )}
