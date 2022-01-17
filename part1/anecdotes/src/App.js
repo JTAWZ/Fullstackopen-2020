@@ -64,9 +64,21 @@ const App = () => {
     return setBad(bad + 1), setTotal(total + 1);
   };
 
+  const generateRandomAnnecdotes = () => {
+    const num = anecdotes.length;
+    const result = Math.floor(Math.random() * num);
+    return setSelected(result);
+  };
   return (
     <>
-      {anecdotes[selected]}
+      <h4>{anecdotes[selected]}</h4>
+      <Button
+        onClick={() => {
+          generateRandomAnnecdotes();
+        }}
+        text="next anecdotes"
+      />
+
       <h1>give feedback</h1>
 
       <Button
@@ -93,7 +105,6 @@ const App = () => {
       ) : (
         <Statistics statistics={[good, neutral, bad, total]} />
       )}
-      {anecdotes[selected]}
     </>
   );
 };
