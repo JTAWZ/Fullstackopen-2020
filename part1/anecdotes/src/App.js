@@ -53,6 +53,12 @@ const App = () => {
   const [bad, setBad] = useState(0);
   const [total, setTotal] = useState(0);
   const [selected, setSelected] = useState(0);
+  const [votes, setVotes] = useState(
+    Array.apply(null, new Array(anecdotes.length)).map(
+      Number.prototype.valueOf,
+      0
+    )
+  );
 
   const handleGood = () => {
     return setGood(good + 1), setTotal(total + 1);
@@ -64,19 +70,35 @@ const App = () => {
     return setBad(bad + 1), setTotal(total + 1);
   };
 
+  // points doesn't persist in array, need to check how to update array
+
   const generateRandomAnnecdotes = () => {
     const num = anecdotes.length;
     const result = Math.floor(Math.random() * num);
     return setSelected(result);
   };
+
+  const handleAnecdoteVotes = () => {
+    const copy = [...votes];
+    copy[selected] += 1;
+    setVotes(copy);
+  };
   return (
     <>
       <h4>{anecdotes[selected]}</h4>
+      <h4>has {votes[selected]} votes</h4>
       <Button
         onClick={() => {
           generateRandomAnnecdotes();
         }}
         text="next anecdotes"
+      />
+
+      <Button
+        onClick={() => {
+          handleAnecdoteVotes();
+        }}
+        text="vote"
       />
 
       <h1>give feedback</h1>
