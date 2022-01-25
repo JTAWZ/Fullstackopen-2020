@@ -1,5 +1,5 @@
 import React from "react";
-import Notes from "./component/Note";
+import Notes from "./components/Note";
 
 const App = ({ notes }) => {
   // const listOfNote = notes.map((note) => <li key={note.id}>{note.content}</li>);
