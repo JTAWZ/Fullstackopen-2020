@@ -70,8 +70,6 @@ const App = () => {
     return setBad(bad + 1), setTotal(total + 1);
   };
 
-  // points doesn't persist in array, need to check how to update array
-
   const generateRandomAnnecdotes = () => {
     const num = anecdotes.length;
     const result = Math.floor(Math.random() * num);
@@ -83,8 +81,13 @@ const App = () => {
     copy[selected] += 1;
     setVotes(copy);
   };
+
+  const calculateHighestVote = Math.max(...votes);
+  const displayAnecdoteMostVote = votes.indexOf(Math.max(...votes));
+
   return (
     <>
+      <h1>Anecdote of the day</h1>
       <h4>{anecdotes[selected]}</h4>
       <h4>has {votes[selected]} votes</h4>
       <Button
@@ -101,6 +104,9 @@ const App = () => {
         text="vote"
       />
 
+      <h1>Anecdote with most vote</h1>
+      <h4>has {anecdotes[displayAnecdoteMostVote]} votes</h4>
+      <h4>{calculateHighestVote}</h4>
       <h1>give feedback</h1>
 
       <Button
