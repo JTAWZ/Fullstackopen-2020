@@ -9,7 +9,9 @@ const App = () => {
   // };
   const addName = (event) => {
     event.preventDefault();
-    const nameExist = persons.filter((person) => person.name === newName);
+    const nameExist = persons.filter(
+      (person) => person.name.toLowerCase() === newName.toLowerCase()
+    );
     if (nameExist.length > 0) {
       window.alert(`${newName} is already added to phone book`);
       // console.log("check name 1", nameExist.length);
