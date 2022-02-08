@@ -9,12 +9,18 @@ const App = () => {
   // };
   const addName = (event) => {
     event.preventDefault();
-    console.log("button clicked", event.target);
-    const personObj = {
-      name: newName,
-    };
-    setPersons(persons.concat(personObj));
-    setNewName("");
+    const nameExist = persons.filter((person) => person.name === newName);
+    if (nameExist.length > 0) {
+      window.alert(`${newName} is already added to phone book`);
+      // console.log("check name 1", nameExist.length);
+    } else {
+      // console.log("check name 2", nameExist.length);
+      const personObj = {
+        name: newName,
+      };
+      setPersons(persons.concat(personObj));
+      setNewName("");
+    }
   };
 
   const handleOnChange = (event) => {
@@ -37,6 +43,8 @@ const App = () => {
       {persons.map((person, index) => (
         <p key={index}>{person.name}</p>
       ))}
+
+      {/* <div>debug: {newName}</div> */}
     </div>
   );
 };
