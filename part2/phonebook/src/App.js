@@ -1,40 +1,68 @@
 import React, { useState } from "react";
 
 const App = () => {
-  const [persons, setPersons] = useState([{ name: "Arto Hellas" }]);
-  const [newName, setNewName] = useState("enter name here");
+  const [persons, setPersons] = useState([
+    { name: "Arto Hellas", number: "90180595" },
+  ]);
+  const [newName, setNewName] = useState("");
+  const [newNumber, setNewNumber] = useState("");
 
-  // const addName = (event) => {
-  //   setPersons({name:event.target.value)};
-  // };
-  const addName = (event) => {
+  const addContact = (event) => {
     event.preventDefault();
     const nameExist = persons.filter(
       (person) => person.name.toLowerCase() === newName.toLowerCase()
     );
+    const contactExist = persons.filter(
+      (person) => person.number.toLowerCase() === newNumber.toLowerCase()
+    );
+
+    console.log("check person exist", nameExist, contactExist);
     if (nameExist.length > 0) {
       window.alert(`${newName} is already added to phone book`);
-      // console.log("check name 1", nameExist.length);
+    } else if (contactExist.length > 0) {
+      window.alert(`${newNumber} is already added to phone book`);
     } else {
-      // console.log("check name 2", nameExist.length);
       const personObj = {
         name: newName,
+        number: newNumber,
       };
       setPersons(persons.concat(personObj));
       setNewName("");
+      setNewNumber("");
     }
   };
 
-  const handleOnChange = (event) => {
-    console.log("check input", event.target.value);
+  const handleOnChangeName = (event) => {
+    console.log("check name input", event.target.value);
     setNewName(event.target.value);
+  };
+
+  const handleOnChangeNumber = (event) => {
+    console.log("check number input", event.target.value);
+    setNewNumber(event.target.value);
   };
   return (
     <div>
       <h2>Phonebook</h2>
-      <form onSubmit={addName}>
+      <form onSubmit={addContact}>
         <div>
-          name: <input type="text" value={newName} onChange={handleOnChange} />
+          name:{" "}
+          <input
+            type="text"
+            placeholder="Enter Name"
+            value={newName}
+            onChange={handleOnChangeName}
+          />
+        </div>
+
+        <div>
+          number:{" "}
+          <input
+            type="number"
+            placeholder="Enter Number"
+            value={newNumber}
+            onChange={handleOnChangeNumber}
+          />
         </div>
 
         <div>
@@ -43,7 +71,9 @@ const App = () => {
       </form>
       <h2>Numbers</h2>
       {persons.map((person, index) => (
-        <p key={index}>{person.name}</p>
+        <p key={index}>
+          {person.name} {person.number}
+        </p>
       ))}
 
       {/* <div>debug: {newName}</div> */}
