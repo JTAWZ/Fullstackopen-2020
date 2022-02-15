@@ -1,4 +1,7 @@
 import React, { useEffect, useState } from "react";
+import Filter from "./Components/Filter";
+import PersonForm from "./Components/PersonForm";
+import Persons from "./Components/Persons";
 
 const App = () => {
   const [persons, setPersons] = useState([
@@ -9,7 +12,6 @@ const App = () => {
   ]);
   const [newName, setNewName] = useState("");
   const [newNumber, setNewNumber] = useState("");
-  const [searchText, setSearchText] = useState("");
   const [searchResult, setSearchResult] = useState([]);
 
   const addContact = (event) => {
@@ -39,74 +41,40 @@ const App = () => {
   };
 
   const displayContactBySearch = (search) => {
-    console.log("display search value", search);
-    setSearchText(search);
     const searchName = persons.filter((person) =>
       person.name.toLowerCase().includes(search)
     );
-    console.log("check search name", searchName.length);
 
     setSearchResult(searchName);
   };
 
   const handleOnChangeName = (event) => {
-    console.log("check name input", event.target.value);
     setNewName(event.target.value);
   };
 
   const handleOnChangeNumber = (event) => {
-    console.log("check number input", event.target.value);
     setNewNumber(event.target.value);
   };
 
   useEffect(() => {
     setSearchResult([...persons]);
   }, []);
+
   return (
     <div>
       <div>
         <h2>Phonebook</h2>
-        filter shown with:
-        <input
-          type="text"
-          placeholder="Enter name"
-          value={searchText}
-          onChange={(e) => displayContactBySearch(e.target.value.toLowerCase())}
-        />
+        <Filter displayContactBySearch={displayContactBySearch} />
       </div>
-      <form onSubmit={addContact}>
-        <h2>Add a new</h2>
-
-        <div>
-          name:
-          <input
-            type="text"
-            placeholder="Enter Name"
-            value={newName}
-            onChange={handleOnChangeName}
-          />
-        </div>
-
-        <div>
-          number:
-          <input
-            type="number"
-            placeholder="Enter Number"
-            value={newNumber}
-            onChange={handleOnChangeNumber}
-          />
-        </div>
-
-        <div>
-          <button type="submit">add</button>
-        </div>
-      </form>
+      <PersonForm
+        addContact={addContact}
+        newName={newName}
+        newNumber={newNumber}
+        handleOnChangeName={handleOnChangeName}
+        handleOnChangeNumber={handleOnChangeNumber}
+      />
       <h2>Numbers</h2>
-      {searchResult.map((result) => (
-        <p key={result.id}>
-          {result.name} {result.number}
-        </p>
-      ))}
+      <Persons searchResult={searchResult} />
 
       {/* <div>debug: {newName}</div> */}
     </div>
