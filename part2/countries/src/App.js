@@ -8,15 +8,14 @@ const App = () => {
 
   const getCountries = () => {
     axios.get("https://restcountries.com/v3.1/all").then((response) => {
-      console.log("check response data", response.data);
       setCountries(response.data);
     });
   };
 
   const filterCountriesBySearch = (search) => {
-    const searchCountries = countries.filter((country) =>
-      country.name.common.toLowerCase().includes(search)
-    );
+    const searchCountries = countries.filter((country) => {
+      return country.name.common.toLowerCase().includes(search);
+    });
 
     setSearchResult(searchCountries);
   };
