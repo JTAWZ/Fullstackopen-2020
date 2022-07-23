@@ -1,43 +1,60 @@
 import React, { useState } from "react";
 
 const Countries = ({ searchResult }) => {
-  const [displayMore, setDisplayMore] = useState(false);
   console.log("check search results", searchResult);
-  const displaySearchResults = () => {
-    if (searchResult.length > 1 && searchResult.length <= 10) {
-      return (
-        <>
-          {searchResult.map((result) => (
-            <React.Fragment key={result.cca2}>
-              <p>
-                {result.name.common}
-                <button>Show</button>
-              </p>
-            </React.Fragment>
-          ))}
-        </>
-      );
-    } else if (searchResult.length === 1) {
-      return <CountryInfomation searchResult={searchResult} />;
-    }
-  };
-  return <>{displaySearchResults()}</>;
+  if (searchResult.length > 9) {
+    return <h1>There are too many searches, please try again</h1>;
+  } else {
+    return (
+      <>
+        {searchResult.map((result) => {
+          return (
+            <DisplaySearchResults
+              details={result}
+              single={searchResult.length === 1 ? true : false}
+              key={result.cca2}
+            />
+          );
+        })}
+      </>
+    );
+  }
 };
 
-const CountryInfomation = ({ searchResult }) => {
-  const display = searchResult.map((result) => {
-    return (
-      <React.Fragment key={result.cca2}>
-        <h1>{result.name.common}</h1>
-        <p>Capital: {result.capital}</p>
-        <p>Area: {result.area}</p>
-        <h2>Languagues:</h2>
-        <Languages languages={result.languages} />
-        <img src={result.flags.png} alt="country flag" />
-      </React.Fragment>
-    );
-  });
-  return display;
+const DisplaySearchResults = ({ details, single }) => {
+  const [displayMore, setDisplayMore] = useState(false);
+  const handleShow = () => {
+    setDisplayMore(!displayMore);
+  };
+  console.log("check details", details);
+  console.log("check single", single);
+  return (
+    <>
+      {single ? (
+        <CountryInfomation result={details} />
+      ) : (
+        <>
+          <p>
+            {details.name.common} <button onClick={handleShow}>show</button>
+          </p>
+          {displayMore && <CountryInfomation result={details} />}
+        </>
+      )}
+    </>
+  );
+};
+
+const CountryInfomation = ({ result }) => {
+  return (
+    <React.Fragment key={result.cca2}>
+      <h1>{result.name.common}</h1>
+      <p>Capital: {result.capital}</p>
+      <p>Area: {result.area}</p>
+      <h2>Languagues:</h2>
+      <Languages languages={result.languages} />
+      <img src={result.flags.png} alt="country flag" />
+    </React.Fragment>
+  );
 };
 
 const Languages = ({ languages }) => {
