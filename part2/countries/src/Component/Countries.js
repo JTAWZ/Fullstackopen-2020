@@ -1,48 +1,55 @@
-import React from "react";
+import React, { useState } from "react";
 
 const Countries = ({ searchResult }) => {
+  const [displayMore, setDisplayMore] = useState(false);
+  console.log("check search results", searchResult);
   const displaySearchResults = () => {
     if (searchResult.length > 1 && searchResult.length <= 10) {
       return (
         <>
           {searchResult.map((result) => (
             <React.Fragment key={result.cca2}>
-              <p>{result.name.common}</p>
+              <p>
+                {result.name.common}
+                <button>Show</button>
+              </p>
             </React.Fragment>
           ))}
         </>
       );
     } else if (searchResult.length === 1) {
-      return (
-        <>
-          <h1>{searchResult[0].name.common}</h1>
-          <p>Capital: {searchResult[0].capital}</p>
-          <p>Area: {searchResult[0].area}</p>
-          <h2>languagues:</h2>
-          {/* <Languages Languages={searchResult[0].languages} /> */}
-          <ul>
-            <li>{JSON.stringify(searchResult[0].languages)}</li>
-          </ul>
-          <img src={searchResult[0].flags.png} alt="country flag" />
-        </>
-      );
+      return <CountryInfomation searchResult={searchResult} />;
     }
   };
   return <>{displaySearchResults()}</>;
 };
 
-const Languages = (languages) => {
-  const newLanguage = Object.values(languages);
+const CountryInfomation = ({ searchResult }) => {
+  const display = searchResult.map((result) => {
+    return (
+      <React.Fragment key={result.cca2}>
+        <h1>{result.name.common}</h1>
+        <p>Capital: {result.capital}</p>
+        <p>Area: {result.area}</p>
+        <h2>Languagues:</h2>
+        <Languages languages={result.languages} />
+        <img src={result.flags.png} alt="country flag" />
+      </React.Fragment>
+    );
+  });
+  return display;
+};
 
-  return (
-    <>
-      {newLanguage.map((value, index) => (
-        <ul key={index}>
-          <li>{JSON.stringify(value)}</li>
-        </ul>
-      ))}
-    </>
-  );
+const Languages = ({ languages }) => {
+  console.log("check languages", languages);
+  const displayLanguage = Object.values(languages).map((value, index) => {
+    return (
+      <ul key={index}>
+        <li>{value}</li>
+      </ul>
+    );
+  });
+  return displayLanguage;
 };
 
 export default Countries;
